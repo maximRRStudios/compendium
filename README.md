@@ -29,7 +29,9 @@ http://localhost:8000/docs
 Для доступа ко всем эндпоинтам требуется API-ключ.
 
 Ключ по умолчанию (в образе):
+
 ~~SUPERSECRETKeyByMax1303~~
+
 Передайте его в заголовке:
 
 X-API-Key: ~~SUPERSECRETKeyByMax1303~~
