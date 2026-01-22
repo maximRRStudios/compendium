@@ -111,7 +111,6 @@ class ActivityRepository:
         }, None
     
     async def get_organizations_by_activity_and_descendants(self, activity_id: int, offset: int, limit: int):
-        # 1. Проверяем, существует ли деятельность
         result = await self.session.execute(
             select(Activity).where(Activity.id == activity_id)
         )
@@ -119,11 +118,9 @@ class ActivityRepository:
         if not activity:
             return None, "Activity not found"
 
-        # 2. Получаем все ID подвидов
         descendant_ids = await self._get_all_descendant_ids(activity_id)
         all_activity_ids = [activity_id] + descendant_ids
 
-        # 4. Получаем организации + их активности, входящие в дерево
         result = await self.session.execute(
             select(Organization, Activity)
             .join(Organization.activities)
@@ -133,7 +130,6 @@ class ActivityRepository:
         )
         rows = result.all()
 
-        # 5. Группируем: одна организация → несколько matched_activities
         org_map = {}
         for org, act in rows:
             if org.id not in org_map:
@@ -242,15 +238,13 @@ class BuildingRepository:
 
     def _distance(self, lat1: float, lng1: float, lat2: float, lng2: float) -> float:
         """Расстояние в метрах по приближённой формуле"""
-        
-
         R = 6371000  # метры
-        φ1 = radians(lat1)
-        φ2 = radians(lat2)
-        Δφ = radians(lat2 - lat1)
-        Δλ = radians(lng2 - lng1)
+        f1 = radians(lat1)
+        f2 = radians(lat2)
+        delta_f = radians(lat2 - lat1)
+        delta_l = radians(lng2 - lng1)
 
-        a = sin(Δφ / 2) ** 2 + cos(φ1) * cos(φ2) * sin(Δλ / 2) ** 2
+        a = sin(delta_f / 2) ** 2 + cos(f1) * cos(f2) * sin(delta_l / 2) ** 2
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         return R * c
 
