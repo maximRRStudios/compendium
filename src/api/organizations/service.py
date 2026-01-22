@@ -19,7 +19,7 @@ class OrganizationService:
 
 
 class ActivityService:
-    def __init__(self, session):
+    def __init__(self, session: AsyncSession):
         self.repo = ActivityRepository(session)
 
     async def get_organizations_by_activity_id(self, activity_id: int, offset: int = 0, limit: int = 100):
@@ -30,7 +30,7 @@ class ActivityService:
 
 
 class BuildingService:
-    def __init__(self, session):
+    def __init__(self, session: AsyncSession):
         self.repo = BuildingRepository(session)
 
     async def get_buildings_in_bbox(self, lat_min: float, lng_min: float, lat_max: float, lng_max: float):

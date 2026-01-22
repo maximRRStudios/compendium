@@ -1,18 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List, Optional
+from typing import Optional
 
 from src.api.organizations.service import OrganizationService
 from src.api.organizations.service import ActivityService
 from src.api.organizations.service import BuildingService
-
-
 from src.api.organizations.schemas import OrganizationResponsePaginated
 from src.api.organizations.schemas import BuildingWithOrgsResponse
 from src.api.organizations.schemas import OrganizationFullResponse
 from src.api.organizations.schemas import PaginatedOrgsWithActivitiesResponse
 from src.db.session import async_session_general
-
 
 
 router_buildings = APIRouter(prefix="/buildings", tags=["Здания"])
@@ -119,6 +116,7 @@ async def get_organizations_by_activity(
         raise HTTPException(status_code=404, detail=error)
     return result
 
+
 @router_activities.get(
     "/root/{activity_id}/organizations",
     response_model=PaginatedOrgsWithActivitiesResponse,
@@ -189,4 +187,3 @@ async def get_organization_by_id(
     if error:
         raise HTTPException(status_code=404, detail=error)
     return org
-

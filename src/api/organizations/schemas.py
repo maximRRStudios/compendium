@@ -1,6 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
+
 class Building(BaseModel):
     address: str
     latitude: float
@@ -68,12 +69,14 @@ class OrganizationResponse(Organization):
     class Config:
         from_attributes = True
 
+
 class BuildingWithOrgsResponse(BaseModel):
     building: BuildingResponse
     organizations: List[Organization]
 
     class Config:
         from_attributes = True
+
 
 class OrganizationFullResponse(BaseModel):
     id: int
@@ -85,12 +88,14 @@ class OrganizationFullResponse(BaseModel):
     class Config:
         from_attributes = True
 
+
 class ActivityResponse(BaseModel):
     id: int
     name: str
 
     class Config:
         from_attributes = True
+
 
 class OrganizationWithActivitiesResponse(BaseModel):
     organization: OrganizationResponse
@@ -107,4 +112,3 @@ class PaginatedOrgsWithActivitiesResponse(BaseModel):
 
     class Config:
         from_attributes = True
-

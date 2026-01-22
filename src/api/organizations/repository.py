@@ -58,11 +58,9 @@ class OrganizationRepository:
         if not organization:
             return None, "Organization not found"
 
-        # Pydantic сам соберёт нужную структуру
         return organization, None
     
     async def search_organizations(self, query: str, offset: int = 0, limit: int = 100):
-        # Поиск по полю name (LIKE, case-insensitive)
         search_pattern = f"%{query.lower()}%"
 
         # Получение организаций с пагинацией
@@ -224,7 +222,6 @@ class BuildingRepository:
         
         return self._format_building_with_orgs(filtered_buildings), None
 
-
     def _format_building_with_orgs(self, buildings):
         """Преобразует список Building в список словарей, совместимых с BuildingWithOrgsResponse"""
         result = []
@@ -234,7 +231,6 @@ class BuildingRepository:
                 "organizations": b.organizations  # ← уже загружены через selectinload
             })
         return result
-
 
     def _distance(self, lat1: float, lng1: float, lat2: float, lng2: float) -> float:
         """Расстояние в метрах по приближённой формуле"""

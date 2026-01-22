@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-import uvicorn
 
 from src.api import general_router
 
