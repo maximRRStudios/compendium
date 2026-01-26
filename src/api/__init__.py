@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
 from src.api.auth.utils import verify_api_key
-from src.api.organizations.router import router_buildings
-from src.api.organizations.router import router_activities
+from src.api.buildings.router import router_buildings
+from src.api.activities.router import router_activities
 from src.api.organizations.router import router_organizations
 
 
